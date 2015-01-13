@@ -20,11 +20,16 @@ class HttpClient(object):
         except AttributeError:
             self.logger.error('undefined HTTP method!!! %s', method)
             raise
-        response = func(api_url, headers=headers, params=params, **self.extra_request_opts)
+
+        if 'content-type' in headers and headers['content-type'] == 'application/json':
+            self.logger.debug('Make JSON request.')
+            response = func(api_url, headers=headers, json=params, **self.extra_request_opts)
+        else:
+            response = func(api_url, headers=headers, params=params, **self.extra_request_opts)
 
         if is_raw or 'application/json' not in response.headers['content-type']:
             payload = {"__raw__": response.text}
-        else:    
+        else:
             payload = response.json()
 
         if response.status_code < 300:
