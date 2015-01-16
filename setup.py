@@ -13,5 +13,5 @@ setup(name='Rester',
     test_suite="test",
     description='Rest API Testing',
     long_description=open('README.md').read(),
-    install_requires=["requests", "PyYAML>=3.9", "testfixtures>=4.1.1"],
+    install_requires=["requests>=2.5.1", "PyYAML>=3.9", "testfixtures>=4.1.1"],
 )
